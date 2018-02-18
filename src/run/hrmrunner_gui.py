@@ -9,6 +9,7 @@
 
 import sys
 
+sys.path.insert(0, "src/vm")
 from hrmvm import HrmVm as VM
 
 from PyQt5.QtWidgets import QMainWindow, QApplication, QWidget, QPushButton, QAction, QLineEdit, QMessageBox, QLabel

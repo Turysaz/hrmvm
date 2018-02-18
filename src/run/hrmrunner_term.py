@@ -4,11 +4,13 @@
 # This file is part of the HRMVM toolkit
 # HRMVM is free software. See LICENSE file for further information
 #
-# Some test routines to test the HRMVM within the terminal
+# terminal based runner for hrm programs
 
-from hrmvm import HrmVm as VM
 import sys
 import time
+
+sys.path.insert(0, "src/vm")
+from hrmvm import HrmVm as VM
 
 def print_vm(vm):
     print("PC:  " + str(vm.program_count) + ",  " +
@@ -30,7 +32,7 @@ def ostream_emulation(val):
 
 vm = VM(ram_size=10)
 
-#vm.rom = [8,0,8,1,10,2,16,0]
+vm.rom = [8,0,8,1,10,2,16,0]
 
 #vm.rom = [2,11,5,0, 2,13,5,1, 2,-20,5,2, # load initial
 #          2,2,5,4, # load 2 to [4]
@@ -39,14 +41,13 @@ vm = VM(ram_size=10)
 #          18,12,   # jumpn 12
 #          16,16]   # jump 16
 
-#data = readbin("out.hrmbin")
-#vm.rom = data
-
+data = readbin(sys.argv[1])
+vm.rom = data
 
 vm.ostream_subscribers.append(ostream_emulation)
 
 while(True):
-    #print_vm(vm)
+    print_vm(vm)
     #input("enter for next step")
     time.sleep(0.1)
     vm.next_step()

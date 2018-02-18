@@ -6,7 +6,7 @@
 *.hrmbin
 
 # code references
-src/gui/reference_code
+src/reference_code
 
 # documentation files
 doc/datasheet.pdf
