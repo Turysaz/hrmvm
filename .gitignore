@@ -1,0 +1,12 @@
+# editor
+*.swp
+
+# binaries
+*.pyc
+*.hrmbin
+
+# code references
+src/gui/reference_code
+
+# documentation files
+doc/datasheet.pdf

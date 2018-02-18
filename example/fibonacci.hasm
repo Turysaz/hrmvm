@@ -1,0 +1,18 @@
+; Copyright (c) Turysaz 2018
+;
+; demo assembler code for human resource machine emulation
+; prints fibonacci numbers to outstream
+
+start:
+    load        1
+    copyto      1
+    copyto      2
+loop:
+    add         1
+    copyto      3
+    outbox
+    copyfrom    2
+    copyto      1
+    copyfrom    3
+    copyto      2
+    jump        loop

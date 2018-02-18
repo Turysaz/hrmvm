@@ -1,0 +1,20 @@
+; Copyright (c) Turysaz 2018
+;
+; demo assembler code for human resource machine emulation
+; does some nonsense with jump instructions
+
+start:                  ; init
+    load        5
+    copyto      6
+loop:
+    bumpup      5
+    outbox
+    bumpdwn     6
+    jumpz       fin
+    jump        loop
+fin:
+    load 0
+    copyto 5
+    copyto 6
+end:
+    jump end
