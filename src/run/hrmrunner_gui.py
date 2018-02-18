@@ -55,60 +55,62 @@ class App(QMainWindow):
         self.setWindowTitle(self.title)
         self.setGeometry(self.left, self.top, self.width, self.height)
 
+        # immutable components
+        acc_lbl = QLabel(self)
+        acc_lbl.move(130, 100)
+        acc_lbl.setText("ACC:")
+        pc_lbl = QLabel(self)
+        pc_lbl.move(130, 70)
+        pc_lbl.setText("PC:")
+
         ostream_lbl = QLabel(self)
         ostream_lbl.move(20,40)
         ostream_lbl.setText("Out:")
-        self.ostream_val = QLabel(self)
-        self.ostream_val.move(50, 40)
 
         istream_lbl = QLabel(self)
         istream_lbl.move(20,15)
         istream_lbl.setText("In:")
+
+        ram_lbl = QLabel(self)
+        ram_lbl.move(240, 70)
+        ram_lbl.setText("RAM:")
+
+        ram_lbls = [QLabel(self) for i in range(len(self.vm.ram))]
+        for i in range(len(self.vm.ram)):
+            ram_lbls[i].move(240, 95 + 15 * i)
+            ram_lbls[i].setText(bytestr(i) + ":")
+
+        rom_vals = [QLabel(self) for i in range(len(self.vm.rom))]
+        for i in range(len(self.vm.rom)):
+            rom_vals[i].move(80, 95 + 15 * i)
+            rom_vals[i].setText(bytestr(self.vm.rom[i]))
+
+
+        # mutable components
+        self.ostream_val = QLabel(self)
+        self.ostream_val.move(50, 40)
+
         self.istream_val = QLabel(self)
         self.istream_val.move(50, 15)
         self.istream_val.setText("dummy")
 
-
-        self.acc_lbl = QLabel(self)
         self.acc_val = QLabel(self)
-        self.pc_lbl = QLabel(self)
-        self.pc_val = QLabel(self)
-        self.acc_lbl.move(130, 100)
         self.acc_val.move(170, 100)
-        self.pc_lbl.move(130, 70)
+
+        self.pc_val = QLabel(self)
         self.pc_val.move(170, 70)
-        self.acc_lbl.setText("ACC:")
-        self.pc_lbl.setText("PC:")
 
-        self.ram_lbl = QLabel(self)
-        self.ram_lbl.move(240, 70)
-        self.ram_lbl.setText("RAM:")
-
-        self.ram_lbls = [QLabel(self) for i in range(len(self.vm.ram))]
         self.ram_vals = [QLabel(self) for i in range(len(self.vm.ram))]
-
-        # initialize ram index labels
         for i in range(len(self.vm.ram)):
-            lbl = self.ram_lbls[i]
-            lbl.move(240, 95 + 15 * i)
+            self.ram_vals[i].move(300, 95 + 15 * i)
 
-            lbl.setText(bytestr(i) + ":")
-            val = self.ram_vals[i]
-            val.move(300, 95 + 15 * i)
-
-        self.rom_lbl = QLabel(self)
-        self.rom_lbl.move(30, 70)
-        self.rom_lbl.setText("ROM:")
+        rom_lbl = QLabel(self)
+        rom_lbl.move(30, 70)
+        rom_lbl.setText("ROM:")
 
         self.rom_lbls = [QLabel(self) for i in range(len(self.vm.rom))]
-        self.rom_vals = [QLabel(self) for i in range(len(self.vm.rom))]
-
         for i in range(len(self.vm.rom)):
-            lbl = self.rom_lbls[i]
-            lbl.move(30, 95 + 15 * i)
-            val = self.rom_vals[i]
-            val.move(80, 95 + 15 * i)
-            val.setText(bytestr(self.vm.rom[i]))
+            self.rom_lbls[i].move(30, 95 + 15 * i)
 
         self.update_vm_values()
 
@@ -118,9 +120,9 @@ class App(QMainWindow):
         #self.textbox.resize(280,40)
 
         # Create a button in the window
-        self.button = QPushButton('Next Step', self)
-        self.button.move(110,460)
-        self.button.clicked.connect(self.next_step_click)
+        self.but_next = QPushButton('Next Step', self)
+        self.but_next.move(110,460)
+        self.but_next.clicked.connect(self.next_step_click)
 
         self.show()
 
