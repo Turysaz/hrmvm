@@ -9,16 +9,13 @@
 import queue
 import sys
 
+from VmRuntimeExceptions import *
+
 class HrmVm():
     """
     The heart of the emulation.
     Contains Registers, RAM, ROM.
     """
-
-    # return codes
-    SUCCESSFULL             = 0
-    ERR_NO_ROM_SPECIFIED    = 1
-    ERR_UNKNOWN_OPCODE      = 2
 
     # opcodes
     OPC_INBOX       = 0x00
@@ -89,24 +86,26 @@ class HrmVm():
     def next_step(self):
 
         if self.rom == None or len(self.rom) == 0:
-            print("No rom specified! Abort.")
-            return self.ERR_NO_ROM_SPECIFIED
+            raise NoRomException()
 
         instr = self.rom[self.program_count]
         self.program_count += 1
 
         if instr not in self.opcode_handlers:
-            print("Instruction unknown. Abort.")
-            return self.ERR_UNKNOWN_OPCODE
+            raise UnknownOpCodeException(instr)
 
         self.opcode_handlers[instr]()
 
-        if (self.program_count > len(self.rom) - 1
-            or self.program_count < 0):
-                print("PC out of range! Set PC to zero.")
-                self.program_count = 0
+        if self.program_count < 0 or self.program_program_count > len(self.rom):
+            raise InvalidPcException(self.program_count)
 
-        return self.SUCCESSFULL
+        if self.program_count == len(self.rom):
+            print("Warning: PC out of range! Setting PC to zero.\n" +
+                  "If you want to create a loop, you should consider\n" +
+                  "doing so explicitely!")
+            self.program_count = 0
+
+    # end next_step()
 
     # ---- AUX ----
 
@@ -121,6 +120,10 @@ class HrmVm():
 
     def store_indirect(self, adress, value):
         self.ram[self.ram[adress]] = value
+
+    def evaluate_valid_pc(self, pc):
+        if pc >= len(self.rom) or pc < 0:
+            raise InvalidPcException(pc)
 
     # ---- OPC ----
 
@@ -213,10 +216,12 @@ class HrmVm():
 
     def op_jump(self):
         p = self.rom[self.program_count]
+        self.evaluate_valid_pc(p)
         self.program_count = p
 
     def op_jumpz(self):
         p = self.rom[self.program_count]
+        self.evaluate_valid_pc(p)
         if self.accumulator == 0:
             self.program_count = p
         else:
@@ -224,15 +229,14 @@ class HrmVm():
 
     def op_jumpn(self):
         p = self.rom[self.program_count]
+        self.evaluate_valid_pc(p)
         if self.accumulator < 0:
             self.program_count = p
         else:
             self.program_count += 1
 
     def op_jumpa(self):
-        if self.accumulator < 0 or self.accumulator >= len(self.rom):
-            print("Error: invalid jump target!")
-            sys.exit()
+        self.evaluate_valid_pc(self.accumulator)
         self.program_count = self.accumulator
 
     def op_load_pc(self):
