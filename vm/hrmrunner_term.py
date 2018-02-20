@@ -9,8 +9,7 @@
 import sys
 import time
 
-sys.path.insert(0, "src/vm")
-from hrmvm import HrmVm as VM
+from vm_core import Vm
 
 def print_vm(vm):
     print("PC:  " + str(vm.program_count) + ",  " +
@@ -30,7 +29,7 @@ def readbin(filepath):
 def ostream_emulation(val):
     print("VAL WRITTEN: " + str(val))
 
-vm = VM(ram_size=10)
+vm = Vm(ram_size=10)
 
 vm.rom = [8,0,8,1,10,2,16,0]
 

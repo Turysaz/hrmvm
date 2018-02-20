@@ -1,3 +1,3 @@
 #!/bin/bash
 
-python3 src/run/hrmrunner_term.py $@
+python3 vm/hrmrunner_term.py $@

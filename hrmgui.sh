@@ -1,3 +1,3 @@
 #!/bin/bash
 
-python3 src/run/hrmrunner_gui.py $@
+python3 vm/hrmrunner_gui.py $@

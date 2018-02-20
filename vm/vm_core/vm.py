@@ -9,9 +9,9 @@
 import queue
 import sys
 
-from VmRuntimeExceptions import *
+from . import vm_runtime_exceptions
 
-class HrmVm():
+class Vm():
     """
     The heart of the emulation.
     Contains Registers, RAM, ROM.
@@ -96,7 +96,7 @@ class HrmVm():
 
         self.opcode_handlers[instr]()
 
-        if self.program_count < 0 or self.program_program_count > len(self.rom):
+        if self.program_count < 0 or self.program_count > len(self.rom):
             raise InvalidPcException(self.program_count)
 
         if self.program_count == len(self.rom):

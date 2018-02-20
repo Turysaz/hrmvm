@@ -1,3 +1,3 @@
 #!/bin/bash
 
-python3 src/asm/hrmasm.py $@
+python3 asm/hrmasm.py $@
