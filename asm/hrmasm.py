@@ -226,7 +226,7 @@ def assemble(lines, labels):
 
         if word == "ldpc":
             if len(frags) != 1:
-                sytax_error("LDPC takes no arguments!", line number)
+                sytax_error("LDPC takes no arguments!", line_number)
             bytecode.append(OPC_LDPC)
             continue
 
