@@ -41,6 +41,8 @@ OPC_SUB_I       = 0x0f
 OPC_JUMP        = 0x10
 OPC_JUMPZ       = 0x11
 OPC_JUMPN       = 0x12
+OPC_JUMPA       = 0x13
+OPC_LDPC        = 0x14
 
 
 def clean(lines):
@@ -115,12 +117,14 @@ def assemble(lines, labels):
                 syntax_error("INBOX does not have arguments.", line_number)
 
             bytecode.append(OPC_INBOX)
+            continue
 
         if word == "outbox":
             if len(frags) != 1:
                 syntax_error("OUTBOX does not have arguments.", line_number)
 
             bytecode.append(OPC_OUTBOX)
+            continue
 
         if word == "load":
             if len(frags) != 2:
@@ -148,6 +152,7 @@ def assemble(lines, labels):
 
         if word == "nop":
             bytecode.append(OPC_NOP)
+            continue
 
         if word == "bumpup":
             if len(frags) != 2:
@@ -212,7 +217,21 @@ def assemble(lines, labels):
             bytecode.append(-1)
             continue
 
+        if word == "jumpa":
+            if len(frags) != 1:
+                syntax_error("JUMPA takes no arguments!", line_number)
 
+            bytecode.append(OPC_JUMPA)
+            continue
+
+        if word == "ldpc":
+            if len(frags) != 1:
+                sytax_error("LDPC takes no arguments!", line number)
+            bytecode.append(OPC_LDPC)
+            continue
+
+
+        # add argument to bytecode
         if len(frags) > 1:
             if indirect:
                 bytecode.append(int(frags[1][1:-1])) # remove brackets
