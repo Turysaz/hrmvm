@@ -40,6 +40,8 @@ class HrmVm():
     OPC_JUMP        = 0x10
     OPC_JUMPZ       = 0x11
     OPC_JUMPN       = 0x12
+    OPC_JUMPA       = 0x13
+    OPC_LDPC        = 0x14
 
 
     def __init__(self, ram_size=255):
@@ -77,7 +79,9 @@ class HrmVm():
             self.OPC_SUB_I:     self.op_sub_indirect,
             self.OPC_JUMP:      self.op_jump,
             self.OPC_JUMPZ:     self.op_jumpz,
-            self.OPC_JUMPN:     self.op_jumpn
+            self.OPC_JUMPN:     self.op_jumpn,
+            self.OPC_JUMPA:     self.op_jumpa,
+            self.OPC_LDPC:      self.op_load_pc
         }
 
     # end ctor
@@ -224,3 +228,12 @@ class HrmVm():
             self.program_count = p
         else:
             self.program_count += 1
+
+    def op_jumpa(self):
+        if self.accumulator < 0 or self.accumulator >= len(self.rom):
+            print("Error: invalid jump target!")
+            sys.exit()
+        self.program_count = self.accumulator
+
+    def op_load_pc(self):
+        self.accumulator = self.program_count
