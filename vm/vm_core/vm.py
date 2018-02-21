@@ -128,7 +128,7 @@ class Vm():
     # ---- OPC ----
 
     def op_pop_inbox(self):
-        if self.istream.empty:
+        if self.istream.empty():
             print("No values in istream! Assuming zero.")
             self.accumulator = 0
         else:
