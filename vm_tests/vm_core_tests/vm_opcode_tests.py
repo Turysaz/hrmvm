@@ -82,6 +82,18 @@ class Vm_Opcode_Tests(unittest.TestCase):
         self.assertEqual(sut.accumulator, 3)
         self.assertEqual(sut.ram, [1,2,3,4])
 
+    def test_copyfrom_direct_invalid_adress(self):
+        # arrange
+        sut = Vm()
+        sut.rom = [sut.OPC_COPYFROM, 2, sut.OPC_NOP]
+        sut.ram = [1,2,3,4]
+
+        # act
+        sut.next_step()
+
+        # assert
+        self.fail()
+
     def test_copyfrom_indirect(self):
         # arrange
         sut = Vm()
@@ -95,6 +107,19 @@ class Vm_Opcode_Tests(unittest.TestCase):
         self.assertEqual(sut.program_count, 2)
         self.assertEqual(sut.accumulator, 4)
         self.assertEqual(sut.ram, [1,2,3,4])
+
+
+    def test_copyfrom_indirect_invalid_adress(self):
+        # arrange
+        sut = Vm()
+        sut.rom = [sut.OPC_COPYFROM_I, 2, sut.OPC_NOP]
+        sut.ram = [1,2,3,4]
+
+        # act
+        sut.next_step()
+
+        # assert
+        self.fail()
 
     def test_copyto_direct(self):
         # arrange
@@ -110,6 +135,9 @@ class Vm_Opcode_Tests(unittest.TestCase):
         self.assertEqual(sut.accumulator, 42)
         self.assertEqual(sut.ram[2], 42)
 
+    def test_copyto_direct_invalid_adress(self):
+        self.fail()
+
     def test_copyto_indirect(self):
         # arrange
         sut = Vm()
@@ -124,6 +152,9 @@ class Vm_Opcode_Tests(unittest.TestCase):
         self.assertEqual(sut.program_count, 2)
         self.assertEqual(sut.accumulator, 42)
         self.assertEqual(sut.ram, [1,2,3,42])
+
+    def test_copyto_indirect_invalid_adress(self):
+        self.fail()
 
     def test_nop(self):
         # arrange
@@ -155,6 +186,9 @@ class Vm_Opcode_Tests(unittest.TestCase):
         self.assertEqual(sut.accumulator, 4)
         self.assertEqual(sut.ram, [1,2,4,4])
 
+    def test_bumpup_direct_invalid_adress(self):
+        self.fail()
+
     def test_bumpup_indirect(self):
         # arrange
         sut = Vm()
@@ -169,6 +203,9 @@ class Vm_Opcode_Tests(unittest.TestCase):
         self.assertEqual(sut.program_count, 2)
         self.assertEqual(sut.accumulator, 5)
         self.assertEqual(sut.ram, [1,2,3,5])
+
+    def test_bumpup_indirect_invalid_adress(self):
+        self.fail()
 
     def test_bumpdwn_direct(self):
         # arrange
@@ -185,6 +222,9 @@ class Vm_Opcode_Tests(unittest.TestCase):
         self.assertEqual(sut.accumulator, 2)
         self.assertEqual(sut.ram, [1,2,2,4])
 
+    def test_bumpdwn_direct_invalid_adress(self):
+        self.fail()
+
     def test_bumpdwn_indirect(self):
         # arrange
         sut = Vm()
@@ -200,10 +240,16 @@ class Vm_Opcode_Tests(unittest.TestCase):
         self.assertEqual(sut.accumulator, 3)
         self.assertEqual(sut.ram, [1,2,3,3])
 
+    def test_bumpdwn_indirect_invalid_adress(self):
+        self.fail()
+
     def test_add_direct(self):
         # arrange
         # act
         # assert
+        self.fail()
+
+    def test_add_direct_invalid_adress(self):
         self.fail()
 
     def test_test_indirect(self):
@@ -212,10 +258,16 @@ class Vm_Opcode_Tests(unittest.TestCase):
         # assert
         self.fail()
 
+    def test_add_indirect_invalid_adress(self):
+        self.fail()
+
     def test_sub_direct(self):
         # arrange
         # act
         # assert
+        self.fail()
+
+    def test_sub_direct_invalid_adress(self):
         self.fail()
 
     def test_sub_indirect(self):
@@ -224,10 +276,16 @@ class Vm_Opcode_Tests(unittest.TestCase):
         # assert
         self.fail()
 
+    def test_sub_indirect_invalid_adress(self):
+        self.fail()
+
     def test_jump(self):
         # arrange
         # act
         # assert
+        self.fail()
+
+    def test_jump_invalid_target(self):
         self.fail()
 
     def test_jumpz(self):
@@ -236,16 +294,25 @@ class Vm_Opcode_Tests(unittest.TestCase):
         # assert
         self.fail()
 
+    def test_jumpz_invalid_target(self):
+        self.fail()
+
     def test_jumpn(self):
         # arrange
         # act
         # assert
         self.fail()
 
+    def test_jumpn_invalid_target(self):
+        self.fail()
+
     def test_jumpa(self):
         # arrange
         # act
         # assert
+        self.fail()
+
+    def test_jumpa_invalid_target(self):
         self.fail()
 
     def test_ldpc(self):
