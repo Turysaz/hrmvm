@@ -110,20 +110,28 @@ class Vm():
     # ---- AUX ----
 
     def load_direct(self, adress):
+        self.evaluate_valid_ram_cell(adress)
         return self.ram[adress]
 
     def load_indirect(self, adress):
+        self.evaluate_valid_ram_cell(adress)
         return self.ram[self.ram[adress]]
 
     def store_direct(self, adress, value):
+        self.evaluate_valid_ram_cell(adress)
         self.ram[adress] = value
 
     def store_indirect(self, adress, value):
+        self.evaluate_valid_ram_cell(adress)
         self.ram[self.ram[adress]] = value
 
     def evaluate_valid_pc(self, pc):
         if pc >= len(self.rom) or pc < 0:
             raise InvalidPcException(pc)
+
+    def evaluate_valid_ram_cell(self, adress):
+        if adress >= len(self.ram) or adress < 0:
+            raise InvalidRamAdress(adress)
 
     # ---- OPC ----
 

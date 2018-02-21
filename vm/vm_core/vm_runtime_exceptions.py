@@ -20,6 +20,13 @@ class InvalidPcException(VmRuntimeError):
         super().__init__(message)
         print("PC = " + str(pc))
 
+class InvalidRamAdress(VmRuntimeError):
+    "Error to throw if the RAM adress is invalid"
+
+    def __init__(self, adress, message=""):
+        super().__init__(message)
+        print("Adress = " + str(adress))
+
 class NoRomException(VmRuntimeError):
     "Error to throw if the ROM is None or has length 0"
 
