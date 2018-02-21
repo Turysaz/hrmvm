@@ -6,4 +6,5 @@
 #
 # unit tests for the vm_core package
 
-from .vm_tests import Vm_Tests
+from .vm_basic_tests import Vm_Basic_Tests
+from .vm_opcode_tests import Vm_Opcode_Tests

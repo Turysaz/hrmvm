@@ -9,7 +9,7 @@
 import queue
 import sys
 
-from . import vm_runtime_exceptions
+from .vm_runtime_exceptions import *
 
 class Vm():
     """
@@ -88,6 +88,9 @@ class Vm():
         if self.rom == None or len(self.rom) == 0:
             raise NoRomException()
 
+        if self.program_count < 0 or self.program_count > len(self.rom):
+            raise InvalidPcException(self.program_count)
+
         instr = self.rom[self.program_count]
         self.program_count += 1
 
@@ -95,9 +98,6 @@ class Vm():
             raise UnknownOpCodeException(instr)
 
         self.opcode_handlers[instr]()
-
-        if self.program_count < 0 or self.program_count > len(self.rom):
-            raise InvalidPcException(self.program_count)
 
         if self.program_count == len(self.rom):
             print("Warning: PC out of range! Setting PC to zero.\n" +
