@@ -2,6 +2,7 @@
 *.swp
 
 # binaries
+*/__pycache__
 *.pyc
 *.hrmbin
 
