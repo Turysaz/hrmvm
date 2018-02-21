@@ -29,24 +29,30 @@ def readbin(filepath):
 def ostream_emulation(val):
     print("VAL WRITTEN: " + str(val))
 
-vm = Vm(ram_size=10)
 
-vm.rom = [8,0,8,1,10,2,16,0]
+def main():
+    vm = Vm(ram_size=10)
 
-#vm.rom = [2,11,5,0, 2,13,5,1, 2,-20,5,2, # load initial
-#          2,2,5,4, # load 2 to [4]
-#          9,4,     # incr [[4]]
-#          10,4,    # decr [4]
-#          18,12,   # jumpn 12
-#          16,16]   # jump 16
+    vm.rom = [8,0,8,1,10,2,16,0]
 
-data = readbin(sys.argv[1])
-vm.rom = data
+    #vm.rom = [2,11,5,0, 2,13,5,1, 2,-20,5,2, # load initial
+    #          2,2,5,4, # load 2 to [4]
+    #          9,4,     # incr [[4]]
+    #          10,4,    # decr [4]
+    #          18,12,   # jumpn 12
+    #          16,16]   # jump 16
 
-vm.ostream_subscribers.append(ostream_emulation)
+    data = readbin(sys.argv[1])
+    vm.rom = data
 
-while(True):
-    print_vm(vm)
-    #input("enter for next step")
-    time.sleep(0.1)
-    vm.next_step()
+    vm.ostream_subscribers.append(ostream_emulation)
+
+    while(True):
+        print_vm(vm)
+        #input("enter for next step")
+        time.sleep(0.1)
+        vm.next_step()
+
+
+if __name__ == "__main__":
+    loop()

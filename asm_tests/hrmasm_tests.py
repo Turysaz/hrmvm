@@ -6,8 +6,6 @@
 #
 # unit tests for the assembler
 
-import sys
-sys.path.insert(0, "../asm")
 
 import unittest
 import hrmasm

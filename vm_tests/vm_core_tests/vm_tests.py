@@ -6,8 +6,6 @@
 #
 # unit test for the vm methods
 
-import sys
-sys.path.insert(0, "../vm")
 
 import unittest
 from vm_core import Vm

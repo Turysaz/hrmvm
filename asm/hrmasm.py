@@ -310,4 +310,5 @@ def mainloop(args):
     write_bytes(bytecode, ofile, oascii)
 
 
-mainloop(sys.argv[1:])
+if __name__ == "__main__":
+    mainloop(sys.argv[1:])
