@@ -8,6 +8,8 @@
 
 
 # TODO: improve the label thing. what an inperformant hack!
+# TODO: use exceptions instead of print + sys.exit
+# TODO: exceptions on multiply defined labels
 
 import sys
 import re

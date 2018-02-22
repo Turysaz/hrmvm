@@ -16,4 +16,6 @@ sys.path.insert(0,
             '../asm')))
 
 
-from .hrmasm_tests import Hrmasm_Tests
+from .asm_meta_tests import Asm_Meta_Tests
+from .asm_assembly_simple_tests import Asm_Assembly_Simple_Tests
+from .asm_assembly_complex_tests import Asm_Assembly_Complex_Tests

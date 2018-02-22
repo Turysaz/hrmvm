@@ -4,13 +4,11 @@
 # This file is part of the HRMVM toolkit
 # HRMVM is free software. See LICENSE file for further information
 #
-# unit tests for the assembler
-
+# unit tests for single instruction assemblies
 
 import unittest
 import hrmasm
 
-class Hrmasm_Tests(unittest.TestCase):
+class Asm_Assembly_Simple_Tests(unittest.TestCase):
 
-    def test_me(self):
-        self.assertEqual(1,1)
+    pass
