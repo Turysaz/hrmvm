@@ -3,6 +3,8 @@
 A VM for Human Resource Machine with some small modifications compared to
 the original game.
 
+- **master:** [![Build Status](https://travis-ci.org/Turysaz/hrmvm.svg?branch=master)](https://travis-ci.org/Turysaz/hrmvm)  
+
 ## How to use it
 1. Write some HRM assembler code (see specs in `./doc/datasheet.ods`)
 2. Assemble using `./hrmasm.sh` (you may use the `-h`)

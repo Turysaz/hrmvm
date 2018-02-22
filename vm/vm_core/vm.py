@@ -115,6 +115,7 @@ class Vm():
 
     def load_indirect(self, adress):
         self.evaluate_valid_ram_cell(adress)
+        self.evaluate_valid_ram_cell(self.ram[adress])
         return self.ram[self.ram[adress]]
 
     def store_direct(self, adress, value):
@@ -131,7 +132,7 @@ class Vm():
 
     def evaluate_valid_ram_cell(self, adress):
         if adress >= len(self.ram) or adress < 0:
-            raise InvalidRamAdress(adress)
+            raise InvalidRamAdressException(adress)
 
     # ---- OPC ----
 
@@ -229,16 +230,16 @@ class Vm():
 
     def op_jumpz(self):
         p = self.rom[self.program_count]
-        self.evaluate_valid_pc(p)
         if self.accumulator == 0:
+            self.evaluate_valid_pc(p)
             self.program_count = p
         else:
             self.program_count += 1
 
     def op_jumpn(self):
         p = self.rom[self.program_count]
-        self.evaluate_valid_pc(p)
         if self.accumulator < 0:
+            self.evaluate_valid_pc(p)
             self.program_count = p
         else:
             self.program_count += 1
@@ -248,4 +249,4 @@ class Vm():
         self.program_count = self.accumulator
 
     def op_load_pc(self):
-        self.accumulator = self.program_count
+        self.accumulator = self.program_count - 1

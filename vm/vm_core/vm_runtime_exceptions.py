@@ -20,7 +20,7 @@ class InvalidPcException(VmRuntimeError):
         super().__init__(message)
         print("PC = " + str(pc))
 
-class InvalidRamAdress(VmRuntimeError):
+class InvalidRamAdressException(VmRuntimeError):
     "Error to throw if the RAM adress is invalid"
 
     def __init__(self, adress, message=""):
