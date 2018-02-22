@@ -9,8 +9,7 @@
 
 import sys
 
-sys.path.insert(0, "src/vm")
-from hrmvm import HrmVm as VM
+from vm_core import Vm
 
 from PyQt5.QtWidgets import QMainWindow, QApplication, QWidget, QPushButton, QAction, QLineEdit, QMessageBox, QLabel
 from PyQt5.QtGui import QIcon
@@ -40,7 +39,7 @@ class App(QMainWindow):
         self.width = 350
         self.height = 500
 
-        self.vm = VM(ram_size=vm_ram_size)
+        self.vm = Vm(ram_size=vm_ram_size)
         self.vm.rom = rom
         self.vm.ostream_subscribers.append(self.ostream_append)
 

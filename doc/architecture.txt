@@ -20,7 +20,7 @@ OPCODES
 ===+===============================================================
 0  |  INBOX   OUTBOX   LOAD   [=COPYFROM==]   [===COPYTO===]   NOP
 1  |  [==BUMPUP==]    [==BUMPDWN==]   [====ADD====]  [=====SUB====]
-2  |  JUMP    JUMPZ    JUMPN   ------------------------------------
+2  |  JUMP    JUMPZ    JUMPN   JUMPA  LDPC ------------------------
 
 
 DEC OCT     HEX     WORD        PARAM       FUNC             PC incr
@@ -32,7 +32,7 @@ DEC OCT     HEX     WORD        PARAM       FUNC             PC incr
  4  04      0x04    COPYFROM     y      [[p]]-> ACC             2
  5  05      0x05    COPYTO       y      ACC -> [p]              2
  6  06      0x06    COPYTO       y      ACC -> [[p]]            2
- 7  07      0x07    NOP          n      none
+ 7  07      0x07    NOP          n      none                    1
  8  10      0x08    BUMPUP       y      [p] + 1 -> [p]          2
  9  11      0x09    BUMPUP       y      [[p]] + 1 -> [[p]]      2
 10  12      0x0a    BUMPDWN      y      [p] - 1 -> [p]          2
@@ -44,3 +44,5 @@ DEC OCT     HEX     WORD        PARAM       FUNC             PC incr
 16  20      0x10    JUMP         y      p -> PC                 0
 17  21      0x11    JUMPZ        y      p -> PC if ACC = 0      2
 18  22      0x12    JUMPN        y      p -> PC if ACC < 0      2
+19  23      0x13    JUMPA        n      ACC -> PC               0
+20  24      0x14    LDPC         n      PC -> ACC               1
