@@ -9,16 +9,13 @@
 import queue
 import sys
 
-class HrmVm():
+from .vm_runtime_exceptions import *
+
+class Vm():
     """
     The heart of the emulation.
     Contains Registers, RAM, ROM.
     """
-
-    # return codes
-    SUCCESSFULL             = 0
-    ERR_NO_ROM_SPECIFIED    = 1
-    ERR_UNKNOWN_OPCODE      = 2
 
     # opcodes
     OPC_INBOX       = 0x00
@@ -40,6 +37,8 @@ class HrmVm():
     OPC_JUMP        = 0x10
     OPC_JUMPZ       = 0x11
     OPC_JUMPN       = 0x12
+    OPC_JUMPA       = 0x13
+    OPC_LDPC        = 0x14
 
 
     def __init__(self, ram_size=255):
@@ -77,7 +76,9 @@ class HrmVm():
             self.OPC_SUB_I:     self.op_sub_indirect,
             self.OPC_JUMP:      self.op_jump,
             self.OPC_JUMPZ:     self.op_jumpz,
-            self.OPC_JUMPN:     self.op_jumpn
+            self.OPC_JUMPN:     self.op_jumpn,
+            self.OPC_JUMPA:     self.op_jumpa,
+            self.OPC_LDPC:      self.op_load_pc
         }
 
     # end ctor
@@ -85,43 +86,58 @@ class HrmVm():
     def next_step(self):
 
         if self.rom == None or len(self.rom) == 0:
-            print("No rom specified! Abort.")
-            return self.ERR_NO_ROM_SPECIFIED
+            raise NoRomException()
+
+        if self.program_count < 0 or self.program_count > len(self.rom):
+            raise InvalidPcException(self.program_count)
 
         instr = self.rom[self.program_count]
         self.program_count += 1
 
         if instr not in self.opcode_handlers:
-            print("Instruction unknown. Abort.")
-            return self.ERR_UNKNOWN_OPCODE
+            raise UnknownOpCodeException(instr)
 
         self.opcode_handlers[instr]()
 
-        if (self.program_count > len(self.rom) - 1
-            or self.program_count < 0):
-                print("PC out of range! Set PC to zero.")
-                self.program_count = 0
+        if self.program_count == len(self.rom):
+            print("Warning: PC out of range! Setting PC to zero.\n" +
+                  "If you want to create a loop, you should consider\n" +
+                  "doing so explicitely!")
+            self.program_count = 0
 
-        return self.SUCCESSFULL
+    # end next_step()
 
     # ---- AUX ----
 
     def load_direct(self, adress):
+        self.evaluate_valid_ram_cell(adress)
         return self.ram[adress]
 
     def load_indirect(self, adress):
+        self.evaluate_valid_ram_cell(adress)
+        self.evaluate_valid_ram_cell(self.ram[adress])
         return self.ram[self.ram[adress]]
 
     def store_direct(self, adress, value):
+        self.evaluate_valid_ram_cell(adress)
         self.ram[adress] = value
 
     def store_indirect(self, adress, value):
+        self.evaluate_valid_ram_cell(adress)
         self.ram[self.ram[adress]] = value
+
+    def evaluate_valid_pc(self, pc):
+        if pc >= len(self.rom) or pc < 0:
+            raise InvalidPcException(pc)
+
+    def evaluate_valid_ram_cell(self, adress):
+        if adress >= len(self.ram) or adress < 0:
+            raise InvalidRamAdressException(adress)
 
     # ---- OPC ----
 
     def op_pop_inbox(self):
-        if self.istream.empty:
+        if self.istream.empty():
             print("No values in istream! Assuming zero.")
             self.accumulator = 0
         else:
@@ -209,11 +225,13 @@ class HrmVm():
 
     def op_jump(self):
         p = self.rom[self.program_count]
+        self.evaluate_valid_pc(p)
         self.program_count = p
 
     def op_jumpz(self):
         p = self.rom[self.program_count]
         if self.accumulator == 0:
+            self.evaluate_valid_pc(p)
             self.program_count = p
         else:
             self.program_count += 1
@@ -221,6 +239,14 @@ class HrmVm():
     def op_jumpn(self):
         p = self.rom[self.program_count]
         if self.accumulator < 0:
+            self.evaluate_valid_pc(p)
             self.program_count = p
         else:
             self.program_count += 1
+
+    def op_jumpa(self):
+        self.evaluate_valid_pc(self.accumulator)
+        self.program_count = self.accumulator
+
+    def op_load_pc(self):
+        self.accumulator = self.program_count - 1
