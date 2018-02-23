@@ -9,6 +9,6 @@
 import unittest
 import hrmasm
 
-class Asm_Assembly_Complex_Tests(unittest.TestCase):
+class Asm_Assembly_Complex_Invalid_Tests(unittest.TestCase):
 
     pass

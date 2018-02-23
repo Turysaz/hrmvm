@@ -17,5 +17,9 @@ sys.path.insert(0,
 
 
 from .asm_meta_tests import Asm_Meta_Tests
-from .asm_assembly_simple_tests import Asm_Assembly_Simple_Tests
-from .asm_assembly_complex_tests import Asm_Assembly_Complex_Tests
+
+from .asm_assembly_simple_valid_tests import Asm_Assembly_Simple_Valid_Tests
+from .asm_assembly_simple_invalid_tests import Asm_Assembly_Simple_Invalid_Tests
+
+from .asm_assembly_complex_valid_tests import Asm_Assembly_Complex_Valid_Tests
+from .asm_assembly_complex_invalid_tests import Asm_Assembly_Complex_Invalid_Tests

@@ -4,11 +4,11 @@
 # This file is part of the HRMVM toolkit
 # HRMVM is free software. See LICENSE file for further information
 #
-# unit tests for single instruction assemblies
+# unit tests for multiline assemblies
 
 import unittest
 import hrmasm
 
-class Asm_Assembly_Simple_Tests(unittest.TestCase):
+class Asm_Assembly_Complex_Valid_Tests(unittest.TestCase):
 
     pass
