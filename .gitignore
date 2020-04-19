@@ -11,3 +11,7 @@ reference_code
 
 # documentation files
 doc/datasheet.pdf
+
+# coverage test results
+htmlcov
+.coverage

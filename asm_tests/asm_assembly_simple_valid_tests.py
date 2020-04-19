@@ -4,7 +4,7 @@
 # This file is part of the HRMVM toolkit
 # HRMVM is free software. See LICENSE file for further information
 #
-# unit tests for single instruction assemblies
+# unit tests for valid (syntax) single instruction assemblies
 
 import unittest
 import hrmasm
